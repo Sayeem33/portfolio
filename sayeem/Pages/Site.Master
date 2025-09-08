@@ -1,0 +1,61 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="PortfolioWebApp.Site" %>
+
+<!DOCTYPE html>
+<html>
+<head runat="server">
+    <title>My Portfolio</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link runat="server" href="~/Content/styles.css" rel="stylesheet" />
+    <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <header>
+            <nav class="navbar">
+                <div class="nav-container">
+                    <a href='<%: ResolveUrl("~/Pages/Default.aspx") %>' class="nav-brand">My Portfolio</a>
+                    <ul class="nav-links">
+                        <li><a href='<%: ResolveUrl("~/Pages/Default.aspx") %>'>Home</a></li>
+                        <li><a href='<%: ResolveUrl("~/Pages/About.aspx") %>'>About</a></li>
+                        <li><a href='<%: ResolveUrl("~/Pages/Projects.aspx") %>'>Projects</a></li>
+                        <asp:Panel ID="AuthLinksPanel" runat="server">
+                            <li runat="server" id="LoginLink"><a href='<%: ResolveUrl("~/Pages/Login.aspx") %>'>Login</a></li>
+                            <li runat="server" id="RegisterLink"><a href='<%: ResolveUrl("~/Pages/Register.aspx") %>'>Register</a></li>
+                            <li runat="server" id="AdminLink" visible="false"><a href='<%: ResolveUrl("~/Pages/AdminPanel.aspx") %>'>Admin Panel</a></li>
+                            <li runat="server" id="LogoutLink" visible="false">
+                                <asp:LinkButton ID="LogoutButton" runat="server" OnClick="LogoutButton_Click" CssClass="nav-link-btn">Logout</asp:LinkButton>
+                            </li>
+                            <li runat="server" id="WelcomeMessage" visible="false" class="welcome-msg">
+                                <span>Welcome, <asp:Literal ID="UsernameLiteral" runat="server"></asp:Literal></span>
+                            </li>
+                        </asp:Panel>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        
+        <main>
+            <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
+        </main>
+        
+        <footer>
+            <div class="footer-content">
+                <p>&copy; 2025 My Portfolio. All rights reserved.</p>
+            </div>
+        </footer>
+    </form>
+    <script>
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+
+    if(hamburger) {
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+    }
+    </script>
+
+</body>
+</html>

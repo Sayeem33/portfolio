@@ -1,0 +1,66 @@
+# Build results
+[Bb]in/
+[Oo]bj/
+Debug/
+Release/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+
+# Visual Studio files
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# ASP.NET files
+App_Data/
+App_Browsers/
+App_WebReferences/
+App_Code/TemporaryGeneratedFile_*.*
+Generated_Code/
+
+# NuGet
+*.nupkg
+packages/
+*.snupkg
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Resharper / Rider
+_ReSharper*/
+*.DotSettings.user
+.idea/
+
+# Logs
+*.log
+
+# Publish outputs
+*.PublishSettings
+publish/
+PublishProfiles/
+*.[Pp]ublish.xml
+*.azurePubxml
+
+# IIS
+_IISExpress/
+*.vspscc
+*.vssscc
+
+# User specific
+*.user
+*.userprefs
+
+# Others
+*.dbmdl
+*.bak
+*.Backup
+*.tmp
+*.temp
+*.cache
+*.swp
+*.DS_Store
+Thumbs.db
