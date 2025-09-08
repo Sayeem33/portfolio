@@ -28,17 +28,21 @@ namespace PortfolioWebApp
                         return;
                     }
 
-                    // Create new user
+                    // Hash the password
                     string hashedPassword = AuthHelper.HashPassword(PasswordTextBox.Text);
 
-                    string query = @"INSERT INTO Users (Username, Email, Password, FullName) 
-                                   VALUES (@username, @email, @password, @fullname)";
+                    // Insert new user (with CreatedDate and IsAdmin)
+                    string query = @"INSERT INTO Users 
+                                    (Username, Email, Password, FullName, CreatedDate, IsAdmin) 
+                                     VALUES (@username, @email, @password, @fullname, @createdDate, @isAdmin)";
 
                     SqlParameter[] parameters = {
                         new SqlParameter("@username", UsernameTextBox.Text.Trim()),
                         new SqlParameter("@email", EmailTextBox.Text.Trim()),
                         new SqlParameter("@password", hashedPassword),
-                        new SqlParameter("@fullname", FullNameTextBox.Text.Trim())
+                        new SqlParameter("@fullname", FullNameTextBox.Text.Trim()),
+                        new SqlParameter("@createdDate", DateTime.Now),
+                        new SqlParameter("@isAdmin", false)
                     };
 
                     DatabaseHelper.ExecuteNonQuery(query, parameters);
@@ -58,6 +62,7 @@ namespace PortfolioWebApp
                 {
                     ErrorPanel.Visible = true;
                     ErrorLiteral.Text = "An error occurred during registration. Please try again.";
+                    // Optionally log ex.Message for debugging
                 }
             }
         }

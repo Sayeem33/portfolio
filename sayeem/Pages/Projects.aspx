@@ -15,7 +15,8 @@
     <asp:Repeater ID="rptProjects" runat="server" OnItemCommand="rptProjects_ItemCommand">
         <ItemTemplate>
             <div class="card mb-4" style="width: 22rem; display: inline-block; margin-right: 20px;">
-                <img src='<%# Eval("ImagePath") %>' class="card-img-top" alt='<%# Eval("Title") %>' />
+                <img src='<%# ResolveUrl("~/"+ Eval("ImagePath")) %>' class="card-img-top" alt='<%# Eval("Title") %>' />
+
                 <div class="card-body">
                     <h5 class="card-title"><%# Eval("Title") %></h5>
                     <p class="card-text"><%# Eval("Description") %></p>
