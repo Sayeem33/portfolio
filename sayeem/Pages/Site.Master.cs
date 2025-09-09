@@ -14,7 +14,7 @@ namespace PortfolioWebApp
                 if (currentUser != null)
                 {
                     LoginLink.Visible = false;
-                    RegisterLink.Visible = false;
+                  
                     LogoutLink.Visible = true;
                     WelcomeMessage.Visible = true;
                     UsernameLiteral.Text = currentUser.FullName ?? currentUser.Username;

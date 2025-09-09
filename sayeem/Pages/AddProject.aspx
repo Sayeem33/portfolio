@@ -49,10 +49,11 @@
                 <label for="<%= LiveLinkTextBox.ClientID %>">Live Demo Link:</label>
                 <asp:TextBox ID="LiveLinkTextBox" runat="server" CssClass="form-control" placeholder="https://yourproject.com"></asp:TextBox>
             </div>
-            
+
+            <!-- File Upload -->
             <div class="form-group">
-                <label for="<%= ImagePathTextBox.ClientID %>">Image Path:</label>
-                <asp:TextBox ID="ImagePathTextBox" runat="server" CssClass="form-control" placeholder="~/Images/project.jpg"></asp:TextBox>
+                <label for="<%= ProjectImage.ClientID %>">Project Image:</label>
+                <asp:FileUpload ID="ProjectImage" runat="server" CssClass="form-control" />
             </div>
             
             <div class="form-group">

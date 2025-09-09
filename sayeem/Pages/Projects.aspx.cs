@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Web.UI.WebControls;
 using PortfolioWebApp.Utils;
 
@@ -30,6 +31,7 @@ namespace PortfolioWebApp
                 {
                     rptProjects.DataSource = dt;
                     rptProjects.DataBind();
+                    NoProjectsPanel.Visible = false;
                 }
                 else
                 {
@@ -41,10 +43,7 @@ namespace PortfolioWebApp
         private void CheckAdminAccess()
         {
             var currentUser = AuthHelper.GetCurrentUser();
-            if (currentUser != null && currentUser.IsAdmin)
-            {
-                AdminTopPanel.Visible = true;
-            }
+            AdminTopPanel.Visible = currentUser != null && currentUser.IsAdmin;
         }
 
         protected bool IsUserAdmin()
@@ -64,16 +63,39 @@ namespace PortfolioWebApp
             else if (e.CommandName == "Delete")
             {
                 DeleteProject(projectId);
-                LoadProjects(); // Refresh list
+                LoadProjects(); // Refresh after delete
             }
         }
 
         private void DeleteProject(int projectId)
         {
-            string query = "DELETE FROM Projects WHERE ProjectId = @projectId";
-            SqlParameter[] parameters = { new SqlParameter("@projectId", projectId) };
+            // 1. Get the image path (create new parameter array)
+            string imgQuery = "SELECT ImagePath FROM Projects WHERE ProjectId = @projectId";
+            string imagePath = null;
 
-            DatabaseHelper.ExecuteNonQuery(query, parameters);
+            using (SqlDataReader reader = DatabaseHelper.ExecuteReader(imgQuery,
+                new SqlParameter[] { new SqlParameter("@projectId", projectId) }))
+            {
+                if (reader.Read())
+                {
+                    imagePath = reader["ImagePath"]?.ToString();
+                }
+            }
+
+            // 2. Delete the project from DB (use new parameters)
+            string deleteQuery = "DELETE FROM Projects WHERE ProjectId = @projectId";
+            DatabaseHelper.ExecuteNonQuery(deleteQuery,
+                new SqlParameter[] { new SqlParameter("@projectId", projectId) });
+
+            // 3. Delete the image file from server
+            if (!string.IsNullOrEmpty(imagePath))
+            {
+                string fullPath = Server.MapPath("~/" + imagePath);
+                if (File.Exists(fullPath))
+                {
+                    File.Delete(fullPath);
+                }
+            }
         }
     }
 }

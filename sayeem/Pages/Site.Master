@@ -22,7 +22,6 @@
                         <li><a href='<%: ResolveUrl("~/Pages/Projects.aspx") %>'>Projects</a></li>
                         <asp:Panel ID="AuthLinksPanel" runat="server">
                             <li runat="server" id="LoginLink"><a href='<%: ResolveUrl("~/Pages/Login.aspx") %>'>Login</a></li>
-                            <li runat="server" id="RegisterLink"><a href='<%: ResolveUrl("~/Pages/Register.aspx") %>'>Register</a></li>
                             <li runat="server" id="AdminLink" visible="false"><a href='<%: ResolveUrl("~/Pages/AdminPanel.aspx") %>'>Admin Panel</a></li>
                             <li runat="server" id="LogoutLink" visible="false">
                                 <asp:LinkButton ID="LogoutButton" runat="server" OnClick="LogoutButton_Click" CssClass="nav-link-btn">Logout</asp:LinkButton>

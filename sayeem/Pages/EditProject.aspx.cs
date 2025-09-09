@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.SqlClient;
+using System.IO;
 using PortfolioWebApp.Utils;
 
 namespace PortfolioWebApp
@@ -18,7 +19,6 @@ namespace PortfolioWebApp
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Check if user is logged in and is admin
             var currentUser = AuthHelper.GetCurrentUser();
             if (currentUser == null || !currentUser.IsAdmin)
             {
@@ -50,7 +50,8 @@ namespace PortfolioWebApp
                     TechnologiesTextBox.Text = reader["Technologies"].ToString();
                     GitHubLinkTextBox.Text = reader["GitHubLink"].ToString();
                     LiveLinkTextBox.Text = reader["LiveLink"].ToString();
-                    ImagePathTextBox.Text = reader["ImagePath"].ToString();
+                    string imagePath = reader["ImagePath"].ToString();
+                    CurrentImage.ImageUrl = "~/" + imagePath;
                 }
                 else
                 {
@@ -65,10 +66,20 @@ namespace PortfolioWebApp
             {
                 try
                 {
+                    string imagePath = CurrentImage.ImageUrl.Substring(2); // remove "~/" from path
+
+                    // If new file uploaded, save it
+                    if (fuImage.HasFile)
+                    {
+                        string fileName = Path.GetFileName(fuImage.PostedFile.FileName);
+                        imagePath = "Images/" + fileName;
+                        fuImage.SaveAs(Server.MapPath("~/" + imagePath));
+                    }
+
                     string query = @"UPDATE Projects 
-                                   SET Title = @title, Description = @description, Technologies = @technologies,
-                                       GitHubLink = @github, LiveLink = @live, ImagePath = @image
-                                   WHERE ProjectId = @projectId";
+                                     SET Title = @title, Description = @description, Technologies = @technologies,
+                                         GitHubLink = @github, LiveLink = @live, ImagePath = @image
+                                     WHERE ProjectId = @projectId";
 
                     SqlParameter[] parameters = {
                         new SqlParameter("@projectId", ProjectId),
@@ -77,11 +88,10 @@ namespace PortfolioWebApp
                         new SqlParameter("@technologies", TechnologiesTextBox.Text.Trim()),
                         new SqlParameter("@github", string.IsNullOrEmpty(GitHubLinkTextBox.Text.Trim()) ? (object)DBNull.Value : GitHubLinkTextBox.Text.Trim()),
                         new SqlParameter("@live", string.IsNullOrEmpty(LiveLinkTextBox.Text.Trim()) ? (object)DBNull.Value : LiveLinkTextBox.Text.Trim()),
-                        new SqlParameter("@image", string.IsNullOrEmpty(ImagePathTextBox.Text.Trim()) ? (object)DBNull.Value : ImagePathTextBox.Text.Trim())
+                        new SqlParameter("@image", imagePath)
                     };
 
                     DatabaseHelper.ExecuteNonQuery(query, parameters);
-
                     Response.Redirect("Projects.aspx");
                 }
                 catch (Exception ex)

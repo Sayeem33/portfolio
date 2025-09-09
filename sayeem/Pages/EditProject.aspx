@@ -15,6 +15,7 @@
                 <asp:Literal ID="ErrorLiteral" runat="server"></asp:Literal>
             </asp:Panel>
             
+            <!-- Project Title -->
             <div class="form-group">
                 <label for="<%= TitleTextBox.ClientID %>">Project Title:</label>
                 <asp:TextBox ID="TitleTextBox" runat="server" CssClass="form-control"></asp:TextBox>
@@ -25,6 +26,7 @@
                     Display="Dynamic"></asp:RequiredFieldValidator>
             </div>
             
+            <!-- Description -->
             <div class="form-group">
                 <label for="<%= DescriptionTextBox.ClientID %>">Description:</label>
                 <asp:TextBox ID="DescriptionTextBox" runat="server" TextMode="MultiLine" Rows="4" CssClass="form-control"></asp:TextBox>
@@ -35,26 +37,36 @@
                     Display="Dynamic"></asp:RequiredFieldValidator>
             </div>
             
+            <!-- Technologies -->
             <div class="form-group">
                 <label for="<%= TechnologiesTextBox.ClientID %>">Technologies Used:</label>
                 <asp:TextBox ID="TechnologiesTextBox" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
             
+            <!-- GitHub Link -->
             <div class="form-group">
                 <label for="<%= GitHubLinkTextBox.ClientID %>">GitHub Link:</label>
                 <asp:TextBox ID="GitHubLinkTextBox" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
             
+            <!-- Live Demo Link -->
             <div class="form-group">
                 <label for="<%= LiveLinkTextBox.ClientID %>">Live Demo Link:</label>
                 <asp:TextBox ID="LiveLinkTextBox" runat="server" CssClass="form-control"></asp:TextBox>
             </div>
             
+            <!-- Current Image & File Upload -->
             <div class="form-group">
-                <label for="<%= ImagePathTextBox.ClientID %>">Image Path:</label>
-                <asp:TextBox ID="ImagePathTextBox" runat="server" CssClass="form-control"></asp:TextBox>
+                <label>Current Image:</label>
+                <br />
+                <asp:Image ID="CurrentImage" runat="server" Width="200px" />
+            </div>
+            <div class="form-group">
+                <label for="<%= fuImage.ClientID %>">Change Image:</label>
+                <asp:FileUpload ID="fuImage" runat="server" CssClass="form-control" />
             </div>
             
+            <!-- Update Button -->
             <div class="form-group">
                 <asp:Button ID="UpdateProjectButton" runat="server" Text="Update Project" OnClick="UpdateProjectButton_Click" CssClass="btn btn-primary btn-full" />
             </div>

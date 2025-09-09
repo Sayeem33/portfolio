@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.SqlClient;
+using System.IO;
 using PortfolioWebApp.Utils;
 
 namespace PortfolioWebApp
@@ -23,9 +24,23 @@ namespace PortfolioWebApp
                 try
                 {
                     var currentUser = AuthHelper.GetCurrentUser();
+                    string imagePath = null;
+
+                    // Handle image upload
+                    if (ProjectImage.HasFile)
+                    {
+                        string fileName = Path.GetFileName(ProjectImage.PostedFile.FileName);
+                        string folderPath = Server.MapPath("~/Images/");
+                        if (!Directory.Exists(folderPath))
+                        {
+                            Directory.CreateDirectory(folderPath);
+                        }
+                        ProjectImage.SaveAs(Path.Combine(folderPath, fileName));
+                        imagePath = "Images/" + fileName;
+                    }
 
                     string query = @"INSERT INTO Projects (Title, Description, Technologies, GitHubLink, LiveLink, ImagePath, CreatedBy) 
-                                   VALUES (@title, @description, @technologies, @github, @live, @image, @createdBy)";
+                                     VALUES (@title, @description, @technologies, @github, @live, @image, @createdBy)";
 
                     SqlParameter[] parameters = {
                         new SqlParameter("@title", TitleTextBox.Text.Trim()),
@@ -33,7 +48,7 @@ namespace PortfolioWebApp
                         new SqlParameter("@technologies", TechnologiesTextBox.Text.Trim()),
                         new SqlParameter("@github", string.IsNullOrEmpty(GitHubLinkTextBox.Text.Trim()) ? (object)DBNull.Value : GitHubLinkTextBox.Text.Trim()),
                         new SqlParameter("@live", string.IsNullOrEmpty(LiveLinkTextBox.Text.Trim()) ? (object)DBNull.Value : LiveLinkTextBox.Text.Trim()),
-                        new SqlParameter("@image", string.IsNullOrEmpty(ImagePathTextBox.Text.Trim()) ? (object)DBNull.Value : ImagePathTextBox.Text.Trim()),
+                        new SqlParameter("@image", string.IsNullOrEmpty(imagePath) ? (object)DBNull.Value : imagePath),
                         new SqlParameter("@createdBy", currentUser.UserId)
                     };
 

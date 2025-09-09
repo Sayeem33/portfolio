@@ -610,3 +610,142 @@ p {
         gap: 1rem;
     }
 }
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.project-card {
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .project-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+.project-image img {
+    width: 100%;
+    height: 180px; /* fixed height, maintain ratio */
+    object-fit: cover;
+}
+
+.project-info {
+    padding: 15px;
+}
+
+    .project-info h3 {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .project-info p {
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+.project-links .btn {
+    margin-right: 10px;
+    margin-top: 5px;
+}
+
+/* About Section Enhancements */
+.about-content {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 3rem;
+    margin-top: 3rem;
+}
+
+.about-text {
+    flex: 2;
+}
+
+    .about-text h1 {
+        font-size: 3rem;
+        color: #222;
+        margin-bottom: 1rem;
+    }
+
+    .about-text .lead {
+        font-size: 1.5rem;
+        font-weight: 500;
+        color: #555;
+        margin-bottom: 1.5rem;
+    }
+
+    .about-text p {
+        font-size: 1.1rem;
+        color: #666;
+        line-height: 1.8;
+        margin-bottom: 1.5rem;
+    }
+
+.about-image {
+    flex: 1;
+    text-align: center;
+}
+
+.profile-image {
+    width: 100%;
+    max-width: 320px;
+    border-radius: 20px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .profile-image:hover {
+        transform: scale(1.05);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+
+.contact-info {
+    margin-top: 2rem;
+    background: #f0f4f8;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+}
+
+    .contact-info h3 {
+        margin-bottom: 1rem;
+        color: #007bff;
+    }
+
+.contact-details {
+    display: grid;
+    gap: 0.8rem;
+}
+
+.contact-item strong {
+    min-width: 100px;
+    color: #333;
+}
+
+.contact-item a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+    .contact-item a:hover {
+        color: #0056b3;
+    }
+
+/* Responsive About Section */
+@media (max-width: 768px) {
+    .about-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .about-image {
+        margin-top: 2rem;
+    }
+}
